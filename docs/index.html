@@ -1,682 +1,393 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="NowView - 智能链接预览 Chrome 扩展，完全复刻 notab.pro 功能">
-    <meta name="keywords" content="Chrome 扩展,链接预览,阅读模式,翻译,搜索,NowView">
-    <meta name="author" content="NowView Team">
-    
-    <title>NowView - 智能链接预览 Chrome 扩展</title>
-    
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300a8ff'>N</text></svg>">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NowView - 让网页预览更简单、更高效的多标签页管理工具">
+  <meta name="keywords" content="浏览器扩展,网页预览,标签管理,生产力工具">
+  <title>NowView - 重新定义网页预览体验</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <div class="logo">
-                    <span class="logo-icon">📱</span>
-                    <span class="logo-text">NowView</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#features">功能</a></li>
-                    <li><a href="#architecture">架构</a></li>
-                    <li><a href="#quickstart">快速开始</a></li>
-                    <li><a href="#docs">文档</a></li>
-                    <li><a href="#contact" class="btn-primary">安装</a></li>
-                </ul>
-            </div>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-brand">
+        <span class="logo">🚀</span>
+        <span class="brand-name">NowView</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">功能</a>
+        <a href="#pricing">定价</a>
+        <a href="#faq">常见问题</a>
+        <a href="#download" class="cta-btn">免费下载</a>
+      </div>
+      <div class="mobile-menu-btn">☰</div>
+    </div>
+  </nav>
+
+  <!-- Hero 区域 -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">✨ 全新 v1.2 版本</div>
+        <h1 class="hero-title">
+          重新定义<br>
+          <span class="gradient-text">网页预览体验</span>
+        </h1>
+        <p class="hero-subtitle">
+          在不打开新标签页的情况下快速预览网页<br>
+          支持 YouTube 视频、阅读模式、多主题切换
+        </p>
+        <div class="hero-buttons">
+          <a href="#download" class="btn btn-primary">
+            <span>🎉</span> 免费下载
+          </a>
+          <a href="#features" class="btn btn-secondary">
+            了解更多
+          </a>
         </div>
-    </nav>
-
-    <!-- 英雄区 -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>NowView<br><span class="highlight">智能链接预览工具</span></h1>
-                <p class="hero-description">
-                    完全复刻 notab.pro 功能的 Chrome 浏览器扩展<br>
-                    预览链接、阅读模式、视频优化、即时翻译 - 在当前页面完成所有操作
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-large btn-primary" onclick="scrollToElement('quickstart')">🚀 快速开始</button>
-                    <button class="btn btn-large btn-secondary" onclick="window.open('https://github.com', '_blank')">⭐ 在 GitHub 查看</button>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">9+</span>
-                        <span class="stat-label">核心功能</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">v1.0.0</span>
-                        <span class="stat-label">稳定版本</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">100%</span>
-                        <span class="stat-label">开源</span>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="feature-showcase">
-                    <div class="showcase-item active">
-                        <span class="showcase-icon">🔗</span>
-                        <span class="showcase-label">链接预览</span>
-                    </div>
-                    <div class="showcase-item">
-                        <span class="showcase-icon">📖</span>
-                        <span class="showcase-label">阅读模式</span>
-                    </div>
-                    <div class="showcase-item">
-                        <span class="showcase-icon">🎬</span>
-                        <span class="showcase-label">视频模式</span>
-                    </div>
-                    <div class="showcase-item">
-                        <span class="showcase-icon">🌐</span>
-                        <span class="showcase-label">快速翻译</span>
-                    </div>
-                </div>
-            </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-number">10,000+</div>
+            <div class="stat-label">活跃用户</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">4.8</div>
+            <div class="stat-label">用户评分</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">五星好评</div>
+          </div>
         </div>
-    </section>
-
-    <!-- 核心功能 -->
-    <section id="features" class="features">
-        <div class="container">
-            <h2>✨ 核心功能特性</h2>
-            <p class="section-intro">强大而灵活的功能集合，满足你的所有需求</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🔗</div>
-                    <h3>智能链接预览</h3>
-                    <p>在当前页面浮窗中预览链接内容，无需打开新标签。支持 Ctrl+点击、右键菜单、拖拽等多种交互方式。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📖</div>
-                    <h3>沉浸式阅读模式</h3>
-                    <p>自动提取网页主要内容，去除广告、侧栏等干扰元素，提供舒适的字体和排版优化。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎬</div>
-                    <h3>视频播放优化</h3>
-                    <p>自动检测视频网站内容，提供优化的视频播放体验和全屏支持。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3>快速翻译</h3>
-                    <p>选中文本一键翻译，支持多语言翻译需求，浮窗即时显示翻译结果。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
-                    <h3>快速搜索</h3>
-                    <p>快速搜索选中的文本，支持多个搜索引擎，自定义搜索配置。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
-                    <h3>主题切换系统</h3>
-                    <p>提供亮色、暗色和自动三种主题模式，智能根据系统时间自动切换。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">📌</div>
-                    <h3>多窗口管理</h3>
-                    <p>同时预览多个链接，Pin 功能固定重要窗口，实时显示活动/固定窗口统计。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
-                    <h3>iframe 限制绕过</h3>
-                    <p>使用 declarativeNetRequest + Service Worker 机制，智能突破网站的 iframe 限制。</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">☁️</div>
-                    <h3>数据同步</h3>
-                    <p>使用 Chrome Storage API 自动保存和同步用户设置，跨设备数据同步。</p>
-                </div>
+      </div>
+      <div class="hero-image">
+        <div class="preview-mockup">
+          <div class="mockup-header">
+            <div class="mockup-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
             </div>
+            <div class="mockup-title">NowView Preview</div>
+          </div>
+          <div class="mockup-content">
+            <div class="mockup-preview">
+              <div class="preview-item">📄 文档预览</div>
+              <div class="preview-item">🎬 视频预览</div>
+              <div class="preview-item">📖 阅读模式</div>
+              <div class="preview-item">🎨 主题切换</div>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 技术架构 -->
-    <section id="architecture" class="architecture">
-        <div class="container">
-            <h2>🔧 技术架构</h2>
-            <p class="section-intro">采用现代化的 Manifest V3 架构设计</p>
-            
-            <div class="tech-stack">
-                <div class="tech-item">
-                    <h4>Manifest V3</h4>
-                    <p>Chrome 扩展最新标准</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Service Worker</h4>
-                    <p>后台服务脚本</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Content Script</h4>
-                    <p>页面内容脚本注入</p>
-                </div>
-                <div class="tech-item">
-                    <h4>EventBus</h4>
-                    <p>事件驱动通信</p>
-                </div>
-                <div class="tech-item">
-                    <h4>Chrome Storage</h4>
-                    <p>数据持久化与同步</p>
-                </div>
-                <div class="tech-item">
-                    <h4>declarativeNetRequest</h4>
-                    <p>网络请求过滤修改</p>
-                </div>
-            </div>
+  <!-- 功能特点 -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">强大的功能</h2>
+        <p class="section-subtitle">提升你的浏览效率</p>
+      </div>
 
-            <div class="architecture-detail">
-                <h3>模块化架构设计</h3>
-                <ul class="detail-list">
-                    <li><strong>功能模块独立</strong> - reader-mode、video-mode、translator、search 相互独立</li>
-                    <li><strong>EventBus 通信</strong> - 模块间通过事件总线通信，避免直接耦合</li>
-                    <li><strong>中央主题管理</strong> - 统一的主题管理系统，变化时广播至全部模块</li>
-                    <li><strong>存储层抽象</strong> - 统一的 storage 接口，自动处理本地/同步存储切换</li>
-                    <li><strong>易于扩展</strong> - 模块化设计使添加新功能变得简单快速</li>
-                </ul>
-            </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>快速预览</h3>
+          <p>Ctrl+点击或拖拽链接即可在浮窗中预览，无需打开新标签页</p>
         </div>
-    </section>
 
-    <!-- 快速开始 -->
-    <section id="quickstart" class="quickstart">
-        <div class="container">
-            <h2>🚀 快速开始</h2>
-            <p class="section-intro">三步安装，立即体验</p>
-
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>克隆项目</h3>
-                    <p>从 GitHub 克隆项目到本地</p>
-                    <code>git clone https://github.com/yourusername/notab-extension.git</code>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>打开扩展管理</h3>
-                    <p>在 Chrome 中打开扩展管理页面</p>
-                    <code>chrome://extensions/</code>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>加载扩展</h3>
-                    <p>开启"开发者模式"，点击"加载已解压的扩展程序"，选择项目文件夹</p>
-                    <div class="step-tips">
-                        <strong>✅ 完成！</strong>你现在可以开始使用 NowView 了。
-                    </div>
-                </div>
-            </div>
-
-            <div class="usage-guide">
-                <h3>基础使用方法</h3>
-                <table class="usage-table">
-                    <thead>
-                        <tr>
-                            <th>操作</th>
-                            <th>效果</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Ctrl + 点击</strong> 链接</td>
-                            <td>在浮窗中预览</td>
-                        </tr>
-                        <tr>
-                            <td><strong>右键</strong> 链接 → "在预览窗口中打开"</td>
-                            <td>右键菜单预览</td>
-                        </tr>
-                        <tr>
-                            <td><strong>拖拽</strong> 链接到空白区</td>
-                            <td>拖拽预览</td>
-                        </tr>
-                        <tr>
-                            <td>点击 📌 按钮</td>
-                            <td>固定重要窗口</td>
-                        </tr>
-                        <tr>
-                            <td>点击 📖 按钮</td>
-                            <td>进入阅读模式</td>
-                        </tr>
-                        <tr>
-                            <td>选中文本 + 🌐</td>
-                            <td>快速翻译</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎬</div>
+          <h3>视频模式</h3>
+          <p>专门优化的 YouTube 视频预览，支持全屏播放和画中画模式</p>
         </div>
-    </section>
 
-    <!-- 项目结构 -->
-    <section class="structure">
-        <div class="container">
-            <h2>📁 项目结构</h2>
-            <p class="section-intro">清晰的模块化目录设计</p>
-
-            <div class="file-tree">
-                <div class="tree-item">
-                    <span class="tree-icon">📦</span> notab-extension/
-                    <div class="tree-children">
-                        <div class="tree-item">
-                            <span class="tree-icon">⚙️</span> manifest.json
-                            <span class="tree-desc">扩展配置文件（Manifest V3）</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">📋</span> rules.json
-                            <span class="tree-desc">declarativeNetRequest 规则</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">🔙</span> background/
-                            <span class="tree-desc">后台服务脚本</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">📄</span> content/
-                            <span class="tree-desc">内容脚本和样式</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">🎨</span> popup/
-                            <span class="tree-desc">弹出窗口 UI</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">⚙️</span> options/
-                            <span class="tree-desc">设置页面</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">🛠️</span> utils/
-                            <span class="tree-desc">工具函数和常量</span>
-                        </div>
-                        <div class="tree-item">
-                            <span class="tree-icon">🎭</span> themes/
-                            <span class="tree-desc">主题文件</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>阅读模式</h3>
+          <p>智能提取文章内容，提供舒适的阅读体验，支持字体调节</p>
         </div>
-    </section>
 
-    <!-- 核心模块 -->
-    <section class="modules">
-        <div class="container">
-            <h2>📚 核心模块说明</h2>
-            <p class="section-intro">了解各个模块的职责和功能</p>
-
-            <div class="modules-grid">
-                <div class="module-card">
-                    <h4>🔙 Service Worker</h4>
-                    <p><strong>职责：</strong> 监听扩展生命周期事件、管理 declarativeNetRequest 规则、定期清除浏览器 Service Workers、处理后台计时任务。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>🔗 链接预览模块</h4>
-                    <p><strong>职责：</strong> 监听页面链接交互、创建和管理预览浮窗、处理内容 iframe 加载、集成 Service Worker 清除机制。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>📊 预览管理器</h4>
-                    <p><strong>职责：</strong> 管理所有活跃预览窗口、处理窗口位置和大小、实现 Pin 功能、统计活跃/固定窗口数量。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>🎨 UI 管理器</h4>
-                    <p><strong>职责：</strong> 处理用户交互事件、管理浮窗上的按钮和控件、实现拖拽和缩放交互、消息传递给功能模块。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>📖 阅读模式</h4>
-                    <p><strong>职责：</strong> 提取网页主要内容、清除广告和干扰元素、优化排版和可读性、保存阅读状态。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>🎬 视频模式</h4>
-                    <p><strong>职责：</strong> 检测视频资源、优化视频播放体验、处理全屏显示、自适应分辨率。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>🌐 翻译模块</h4>
-                    <p><strong>职责：</strong> 快速翻译选中文本、支持多语言、浮窗显示翻译结果、缓存翻译记录。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>🔍 搜索模块</h4>
-                    <p><strong>职责：</strong> 快速搜索选中文本、支持多搜索引擎、自定义搜索配置、记录搜索历史。</p>
-                </div>
-
-                <div class="module-card">
-                    <h4>🎨 主题管理器</h4>
-                    <p><strong>职责：</strong> 加载和切换主题、应用主题样式、监听系统主题变化、广播主题变化事件。</p>
-                </div>
-            </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>多主题</h3>
+          <p>6 种精美主题，包括明亮、暗夜、海洋、日落、森林等风格</p>
         </div>
-    </section>
 
-    <!-- 版本计划 -->
-    <section class="roadmap">
-        <div class="container">
-            <h2>📊 版本历史与计划</h2>
-            <p class="section-intro">持续迭代和改进</p>
-
-            <div class="version-timeline">
-                <div class="version-item current">
-                    <div class="version-badge">v1.0.0</div>
-                    <h3>稳定版本 <span class="badge-current">当前</span></h3>
-                    <p class="version-date">2026年1月</p>
-                    <ul class="version-features">
-                        <li>✅ iframe 限制绕过</li>
-                        <li>✅ Pin 功能（固定窗口）</li>
-                        <li>✅ 统计计数</li>
-                        <li>✅ 主题切换（亮色/暗色/自动）</li>
-                        <li>✅ 链接预览核心功能</li>
-                        <li>✅ 阅读/视频/翻译/搜索</li>
-                    </ul>
-                </div>
-
-                <div class="version-item">
-                    <div class="version-badge">第一阶段</div>
-                    <h3>UI 优化 🎨</h3>
-                    <p class="version-desc">计划中</p>
-                    <ul class="version-features">
-                        <li>⬜ 优化 popup 样式</li>
-                        <li>⬜ 改进浮窗设计</li>
-                        <li>⬜ 添加会员状态显示</li>
-                        <li>⬜ 优化按钮和卡片视觉</li>
-                    </ul>
-                </div>
-
-                <div class="version-item">
-                    <div class="version-badge">第二阶段</div>
-                    <h3>主题扩展 🌈</h3>
-                    <p class="version-desc">规划中</p>
-                    <ul class="version-features">
-                        <li>⬜ 创建多个主题预设</li>
-                        <li>⬜ popup 中添加主题选择器</li>
-                        <li>⬜ 主题预览功能</li>
-                        <li>⬜ 自定义主题编辑器</li>
-                    </ul>
-                </div>
-
-                <div class="version-item">
-                    <div class="version-badge">第三阶段</div>
-                    <h3>会员系统 👑</h3>
-                    <p class="version-desc">规划中</p>
-                    <ul class="version-features">
-                        <li>⬜ 会员管理模块</li>
-                        <li>⬜ 兑换码验证系统</li>
-                        <li>⬜ Free/Pro 功能区分</li>
-                        <li>⬜ 会员激活页面</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="feature-card">
+          <div class="feature-icon">📌</div>
+          <h3>固定窗口</h3>
+          <p>固定常用预览窗口，保持内容常驻，方便随时查看</p>
         </div>
-    </section>
 
-    <!-- 文档 -->
-    <section id="docs" class="documentation">
-        <div class="container">
-            <h2>📖 完整文档</h2>
-            <p class="section-intro">详细的文档和指南</p>
-
-            <div class="docs-grid">
-                <a href="#" class="doc-card">
-                    <div class="doc-icon">📘</div>
-                    <h3>项目描述</h3>
-                    <p>完整的项目概述和详细说明</p>
-                </a>
-
-                <a href="#" class="doc-card">
-                    <div class="doc-icon">🚀</div>
-                    <h3>快速开始</h3>
-                    <p>安装和基础使用指南</p>
-                </a>
-
-                <a href="#" class="doc-card">
-                    <div class="doc-icon">🧪</div>
-                    <h3>测试指南</h3>
-                    <p>详细的测试流程和问题排查</p>
-                </a>
-
-                <a href="#" class="doc-card">
-                    <div class="doc-icon">🔧</div>
-                    <h3>开发指南</h3>
-                    <p>开发环境和项目开发原则</p>
-                </a>
-
-                <a href="#" class="doc-card">
-                    <div class="doc-icon">📊</div>
-                    <h3>项目总结</h3>
-                    <p>项目整体总结和技术细节</p>
-                </a>
-
-                <a href="#" class="doc-card">
-                    <div class="doc-icon">📝</div>
-                    <h3>更新日志</h3>
-                    <p>版本更新和 bug 修复记录</p>
-                </a>
-            </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>轻量快速</h3>
+          <p>体积小巧，加载迅速，不影响浏览器性能</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- 隐私安全 -->
-    <section class="privacy">
-        <div class="container">
-            <h2>🔐 隐私与安全</h2>
-            <p class="section-intro">我们重视您的隐私和数据安全</p>
+  <!-- 使用场景 -->
+  <section class="use-cases">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">适用场景</h2>
+        <p class="section-subtitle">满足各种浏览需求</p>
+      </div>
 
-            <div class="privacy-grid">
-                <div class="privacy-item">
-                    <h3>💾 本地存储</h3>
-                    <p>所有用户数据存储在本地浏览器，不上传到任何服务器。</p>
-                </div>
-
-                <div class="privacy-item">
-                    <h3>🔒 无外部通信</h3>
-                    <p>除非用户主动触发翻译/搜索，否则不发送任何数据。</p>
-                </div>
-
-                <div class="privacy-item">
-                    <h3>🌐 开源透明</h3>
-                    <p>代码完全开源，可以审查每一行代码，了解扩展的工作原理。</p>
-                </div>
-
-                <div class="privacy-item">
-                    <h3>🔑 权限最小化</h3>
-                    <p>只请求必要的权限，确保用户体验和安全的平衡。</p>
-                </div>
-            </div>
-
-            <div class="permissions-table">
-                <h3>权限说明</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>权限</th>
-                            <th>用途</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>storage</code></td>
-                            <td>保存用户设置和统计数据</td>
-                        </tr>
-                        <tr>
-                            <td><code>activeTab</code></td>
-                            <td>获取当前活跃标签信息</td>
-                        </tr>
-                        <tr>
-                            <td><code>scripting</code></td>
-                            <td>在页面注入内容脚本</td>
-                        </tr>
-                        <tr>
-                            <td><code>contextMenus</code></td>
-                            <td>添加右键菜单项</td>
-                        </tr>
-                        <tr>
-                            <td><code>declarativeNetRequest</code></td>
-                            <td>移除 iframe 限制头</td>
-                        </tr>
-                        <tr>
-                            <td><code>browsingData</code></td>
-                            <td>清除 Service Workers</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <div class="use-cases-grid">
+        <div class="use-case-item">
+          <div class="use-case-icon">📚</div>
+          <h3>研究学习</h3>
+          <p>快速浏览多个文献和资料，无需频繁切换标签页</p>
         </div>
-    </section>
 
-    <!-- FAQ -->
-    <section class="faq">
-        <div class="container">
-            <h2>❓ 常见问题</h2>
-            <p class="section-intro">快速找到答案</p>
-
-            <div class="faq-list">
-                <details class="faq-item">
-                    <summary>Q: 如何预览链接？</summary>
-                    <div class="faq-answer">
-                        <p>有三种方式预览链接：</p>
-                        <ul>
-                            <li><strong>Ctrl+点击</strong> - 按住 Ctrl 键点击链接</li>
-                            <li><strong>右键菜单</strong> - 右键链接选择"在预览窗口中打开"</li>
-                            <li><strong>拖拽</strong> - 拖拽链接到页面空白处</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Q: 预览窗口不显示怎么办？</summary>
-                    <div class="faq-answer">
-                        <ol>
-                            <li>打开 <code>chrome://extensions/</code></li>
-                            <li>找到 NowView 扩展，点击刷新</li>
-                            <li>打开浏览器控制台（F12）检查错误信息</li>
-                            <li>如果仍未解决，清除浏览器缓存并重新加载</li>
-                        </ol>
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Q: 支持哪些网站？</summary>
-                    <div class="faq-answer">
-                        <p>NowView 支持大多数网站，包括但不限于：</p>
-                        <ul>
-                            <li>GitHub、GitLab 等代码托管平台</li>
-                            <li>知乎、掘金等内容社区</li>
-                            <li>YouTube、Bilibili 等视频平台</li>
-                            <li>WordPress、Medium 等博客平台</li>
-                            <li>大多数新闻和信息网站</li>
-                        </ul>
-                        <p>某些网站可能有特殊限制，我们持续优化支持。</p>
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Q: 如何切换主题？</summary>
-                    <div class="faq-answer">
-                        <p>点击 Chrome 右上角的 NowView 图标，在弹出窗口中选择⚙️，然后在设置页面选择你喜欢的主题（亮色/暗色/自动）。</p>
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Q: 我的数据会被上传吗？</summary>
-                    <div class="faq-answer">
-                        <p>不会。NowView 是完全本地化的扩展，所有数据都存储在你的浏览器中。我们不收集、存储或上传任何用户数据。</p>
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>Q: 如何为项目贡献代码？</summary>
-                    <div class="faq-answer">
-                        <ol>
-                            <li>Fork 项目到你的 GitHub 账户</li>
-                            <li>创建新分支进行开发</li>
-                            <li>提交 Pull Request</li>
-                            <li>等待审查和合并</li>
-                        </ol>
-                        <p>请查看 CONTRIBUTING.md 了解详细贡献指南。</p>
-                    </div>
-                </details>
-            </div>
+        <div class="use-case-item">
+          <div class="use-case-icon">📰</div>
+          <h3>新闻阅读</h3>
+          <p>预览新闻链接，筛选感兴趣的内容后再深度阅读</p>
         </div>
-    </section>
 
-    <!-- 底部 CTA -->
-    <section class="cta">
-        <div class="container">
-            <h2>准备好提升你的浏览体验了吗？</h2>
-            <p>立即安装 NowView，开启更高效的网页浏览之旅</p>
-            <div class="cta-buttons">
-                <button class="btn btn-large btn-primary" onclick="scrollToElement('quickstart')">🚀 立即安装</button>
-                <button class="btn btn-large btn-secondary" onclick="window.open('https://github.com', '_blank')">⭐ GitHub</button>
-            </div>
+        <div class="use-case-item">
+          <div class="use-case-icon">🛍️</div>
+          <h3>购物比价</h3>
+          <p>同时预览多个商品页面，轻松比较价格和功能</p>
         </div>
-    </section>
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>NowView</h3>
-                    <p>智能链接预览 Chrome 扩展</p>
-                    <p class="footer-motto">让网页浏览变得更智能、更高效</p>
-                </div>
-
-                <div class="footer-section">
-                    <h4>快速链接</h4>
-                    <ul>
-                        <li><a href="#features">功能</a></li>
-                        <li><a href="#quickstart">快速开始</a></li>
-                        <li><a href="#docs">文档</a></li>
-                        <li><a href="#contact">联系我们</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>资源</h4>
-                    <ul>
-                        <li><a href="#" target="_blank">GitHub</a></li>
-                        <li><a href="#" target="_blank">问题报告</a></li>
-                        <li><a href="#" target="_blank">讨论</a></li>
-                        <li><a href="#" target="_blank">更新日志</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>关于</h4>
-                    <ul>
-                        <li><a href="#" target="_blank">隐私政策</a></li>
-                        <li><a href="#" target="_blank">使用条款</a></li>
-                        <li><a href="#" target="_blank">许可证</a></li>
-                        <li><a href="#" target="_blank">赞助商</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2026 NowView. All rights reserved.</p>
-                <p>Made with ❤️ by the NowView team</p>
-            </div>
+        <div class="use-case-item">
+          <div class="use-case-icon">💼</div>
+          <h3>办公协作</h3>
+          <p>快速查看同事分享的链接，提高工作效率</p>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
+  <!-- 定价 -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">选择适合你的方案</h2>
+        <p class="section-subtitle">Free 功能已经足够强大</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card free">
+          <div class="pricing-badge">免费</div>
+          <h3>Free 版</h3>
+          <div class="price">
+            <span class="currency">¥</span>
+            <span class="amount">0</span>
+            <span class="period">永久免费</span>
+          </div>
+          <ul class="pricing-features">
+            <li>✅ 每天 10 次预览</li>
+            <li>✅ 5 种免费主题</li>
+            <li>✅ 视频预览模式</li>
+            <li>✅ 阅读模式</li>
+            <li>✅ 多窗口管理</li>
+          </ul>
+          <a href="#download" class="btn btn-outline">开始使用</a>
+        </div>
+
+        <div class="pricing-card pro featured">
+          <div class="pricing-badge popular">推荐</div>
+          <h3>Pro 版</h3>
+          <div class="price">
+            <span class="currency">¥</span>
+            <span class="amount">29</span>
+            <span class="period">一次性买断</span>
+          </div>
+          <ul class="pricing-features">
+            <li>✅ <strong>无限次预览</strong></li>
+            <li>✅ <strong>6 种主题（含紫霞 Pro）</strong></li>
+            <li>✅ 视频预览模式</li>
+            <li>✅ 阅读模式</li>
+            <li>✅ 多窗口管理</li>
+            <li>✅ 优先功能更新</li>
+            <li>✅ 专属技术支持</li>
+          </ul>
+          <a href="#redeem" class="btn btn-primary">兑换激活</a>
+        </div>
+      </div>
+
+      <div class="redeem-section" id="redeem">
+        <h3>🎫 已有兑换码？</h3>
+        <p>安装扩展后，在插件设置中输入兑换码即可激活 Pro 版本</p>
+        <div class="demo-code">
+          <span>测试兑换码：</span>
+          <code>NOWVIEW-PRO-2024</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常见问题 -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">常见问题</h2>
+        <p class="section-subtitle">快速了解 NowView</p>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>如何使用 NowView 预览网页？</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>有三种方式可以触发预览：</p>
+            <ol>
+              <li>按住 Ctrl 键（Mac 为 Cmd 键）点击链接</li>
+              <li>按住 Alt 键点击链接</li>
+              <li>拖拽链接到任意位置</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>Free 版每天 10 次预览够用吗？</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>对于轻度用户来说完全够用！如果你需要频繁预览网页，建议升级到 Pro 版本享受无限预览。Pro 版只需 29 元一次性买断，无任何订阅费用。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>如何获取 Pro 版兑换码？</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>目前可以通过以下方式获取：</p>
+            <ul>
+              <li>参与内测活动（关注我们的社交媒体）</li>
+              <li>推荐好友使用</li>
+              <li>直接购买 29 元买断</li>
+            </ul>
+            <p>测试兑换码：<code>NOWVIEW-PRO-2024</code></p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>NowView 是否支持所有网站？</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>NowView 支持大多数网站。但由于某些网站的安全策略（如 GitHub、银行网站），可能会阻止在 iframe 中显示。我们会持续优化兼容性。</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <h4>我的数据会安全吗？</h4>
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>完全安全！NowView 不收集任何个人数据，所有设置都保存在本地。会员信息也仅存储在你的浏览器中，我们不上传任何用户数据。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下载区域 -->
+  <section id="download" class="download">
+    <div class="container">
+      <div class="download-content">
+        <h2>开始使用 NowView</h2>
+        <p>提升你的浏览效率，从现在开始</p>
+
+        <div class="download-methods">
+          <div class="download-method chrome">
+            <div class="method-icon">🌐</div>
+            <h3>Chrome 网上应用店</h3>
+            <p>推荐方式，自动更新</p>
+            <button class="btn btn-primary" onclick="alert('即将上线 Chrome 商店！敬请期待')">
+              前往下载
+            </button>
+          </div>
+
+          <div class="download-method manual">
+            <div class="method-icon">📦</div>
+            <h3>手动安装</h3>
+            <p>下载 .crx 文件安装</p>
+            <button class="btn btn-secondary" onclick="alert('安装说明：\n1. 下载 notab-extension.crx\n2. 打开 chrome://extensions/\n3. 开启开发者模式\n4. 拖拽 .crx 文件到页面')">
+              安装说明
+            </button>
+          </div>
+
+          <div class="download-method github">
+            <div class="method-icon">💻</div>
+            <h3>GitHub 开源</h3>
+            <p>查看源代码，自行构建</p>
+            <a href="#" class="btn btn-outline">
+              查看项目
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="logo">🚀</div>
+          <h3>NowView</h3>
+          <p>让网页预览更简单</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-section">
+            <h4>产品</h4>
+            <a href="#features">功能</a>
+            <a href="#pricing">定价</a>
+            <a href="#download">下载</a>
+          </div>
+
+          <div class="footer-section">
+            <h4>支持</h4>
+            <a href="#faq">常见问题</a>
+            <a href="#">使用文档</a>
+            <a href="#">反馈建议</a>
+          </div>
+
+          <div class="footer-section">
+            <h4>关于</h4>
+            <a href="#">关于我们</a>
+            <a href="#">隐私政策</a>
+            <a href="#">使用条款</a>
+          </div>
+
+          <div class="footer-section">
+            <h4>联系我们</h4>
+            <a href="#">Email</a>
+            <a href="#">GitHub</a>
+            <a href="#">Twitter</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 NowView. All rights reserved.</p>
+        <p>Made with ❤️ for better web browsing</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
