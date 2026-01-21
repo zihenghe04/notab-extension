@@ -1,389 +1,358 @@
-// ===== 平滑滚动到元素 =====
-function scrollToElement(elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-}
+// ========================================
+// NowView 网站 - 交互脚本
+// ========================================
 
-// ===== 导航栏滚动效果 =====
-const navbar = document.querySelector('.navbar');
-let lastScrollTop = 0;
+document.addEventListener('DOMContentLoaded', function() {
 
-window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    
-    // 添加阴影效果
-    if (scrollTop > 10) {
-        navbar.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.boxShadow = 'none';
-    }
-    
-    lastScrollTop = scrollTop;
-});
+  // 移动端菜单切换
+  const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+  const navLinks = document.querySelector('.nav-links');
 
-// ===== 功能展示轮播 =====
-const showcaseItems = document.querySelectorAll('.showcase-item');
-let currentShowcase = 0;
-
-function rotateShowcase() {
-    showcaseItems.forEach(item => item.classList.remove('active'));
-    showcaseItems[currentShowcase].classList.add('active');
-    
-    currentShowcase = (currentShowcase + 1) % showcaseItems.length;
-}
-
-// 每 3 秒轮播一次
-setInterval(rotateShowcase, 3000);
-
-// ===== 导航链接点击处理 =====
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        
-        // 检查是否是内部链接
-        if (href.startsWith('#')) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                
-                // 更新导航栏活跃状态
-                document.querySelectorAll('.nav-links a').forEach(a => {
-                    a.style.color = '';
-                });
-                link.style.color = 'var(--primary-color)';
-            }
-        }
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
     });
-});
+  }
 
-// ===== 页面滚动时更新导航栏活跃项 =====
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  // FAQ 手风琴效果
+  const faqItems = document.querySelectorAll('.faq-item');
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (scrollTop >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.style.color = '';
-        if (link.getAttribute('href') === `#${current}`) {
-            link.style.color = 'var(--primary-color)';
-        }
-    });
-});
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
 
-// ===== 按钮点击事件 =====
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function() {
-        // 添加点击反馈
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 100);
-    });
-});
-
-// ===== FAQ 动画 =====
-const faqItems = document.querySelectorAll('.faq-item');
-
-faqItems.forEach(item => {
-    const summary = item.querySelector('summary');
-    
-    summary.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // 关闭其他 FAQ 项
+    if (question) {
+      question.addEventListener('click', () => {
+        // 关闭其他打开的项
         faqItems.forEach(otherItem => {
-            if (otherItem !== item && otherItem.hasAttribute('open')) {
-                otherItem.removeAttribute('open');
-            }
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
         });
-        
+
         // 切换当前项
-        if (item.hasAttribute('open')) {
-            item.removeAttribute('open');
+        item.classList.toggle('active');
+      });
+    }
+  });
+
+  // 平滑滚动
+  const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+
+  smoothScrollLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+
+      if (href === '#') return;
+
+      e.preventDefault();
+      const target = document.querySelector(href);
+
+      if (target) {
+        const navbarHeight = document.querySelector('.navbar').offsetHeight;
+        const targetPosition = target.offsetTop - navbarHeight;
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+
+        // 关闭移动端菜单
+        navLinks?.classList.remove('active');
+      }
+    });
+  });
+
+  // 滚动动画效果
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  // 观察所有功能卡片
+  const featureCards = document.querySelectorAll('.feature-card');
+  featureCards.forEach((card, index) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+    observer.observe(card);
+  });
+
+  // 观察所有使用场景项
+  const useCaseItems = document.querySelectorAll('.use-case-item');
+  useCaseItems.forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = `all 0.6s ease ${index * 0.1}s`;
+    observer.observe(item);
+  });
+
+  // 导航栏滚动效果
+  let lastScroll = 0;
+  const navbar = document.querySelector('.navbar');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 100) {
+      navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+    } else {
+      navbar.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+    }
+
+    lastScroll = currentScroll;
+  });
+
+  // 统计数字动画
+  const animateStats = () => {
+    const stats = document.querySelectorAll('.stat-number');
+
+    stats.forEach(stat => {
+      const target = stat.textContent;
+      const hasPlus = target.includes('+');
+      const hasDecimal = target.includes('.');
+      const numericValue = parseFloat(target.replace(/[^0-9.]/g, ''));
+
+      let current = 0;
+      const increment = numericValue / 50;
+      const duration = 1500;
+      const stepTime = duration / 50;
+
+      const updateStat = () => {
+        current += increment;
+        if (current < numericValue) {
+          stat.textContent = (hasDecimal ? current.toFixed(1) : Math.floor(current)) + (hasPlus ? '+' : '');
+          setTimeout(updateStat, stepTime);
         } else {
-            item.setAttribute('open', '');
+          stat.textContent = target;
         }
+      };
+
+      updateStat();
     });
-});
+  };
 
-// ===== 模块卡片悬停效果 =====
-const moduleCards = document.querySelectorAll('.module-card, .feature-card, .doc-card');
+  // 当统计区域进入视口时触发动画
+  const statsSection = document.querySelector('.hero-stats');
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+        animateStats();
+        entry.target.classList.add('animated');
+      }
+    });
+  }, { threshold: 0.5 });
 
-moduleCards.forEach(card => {
+  if (statsSection) {
+    statsObserver.observe(statsSection);
+  }
+
+  // 按钮点击效果
+  const buttons = document.querySelectorAll('.btn');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      // 创建涟漪效果
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s ease-out;
+        left: ${x}px;
+        top: ${y}px;
+        pointer-events: none;
+      `;
+
+      this.style.position = 'relative';
+      this.style.overflow = 'hidden';
+      this.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+
+  // 添加涟漪动画样式
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes ripple {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // 定价卡片高亮效果
+  const pricingCards = document.querySelectorAll('.pricing-card');
+
+  pricingCards.forEach(card => {
     card.addEventListener('mouseenter', function() {
-        this.style.transition = 'var(--transition)';
-    });
-});
-
-// ===== 计数器动画 =====
-function animateCounters() {
-    const statNumbers = document.querySelectorAll('.stat-number');
-    
-    statNumbers.forEach(stat => {
-        const text = stat.textContent;
-        
-        // 处理数字类型的计数
-        const match = text.match(/(\d+)/);
-        if (match) {
-            const finalNumber = parseInt(match[1]);
-            const element = stat;
-            let current = 0;
-            
-            const increment = Math.ceil(finalNumber / 30);
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= finalNumber) {
-                    element.textContent = text;
-                    clearInterval(timer);
-                } else {
-                    element.textContent = text.replace(/\d+/, current);
-                }
-            }, 30);
+      pricingCards.forEach(c => {
+        if (c !== this) {
+          c.style.opacity = '0.7';
         }
+      });
+      this.style.opacity = '1';
     });
-}
 
-// 页面加载时触发计数器动画
-window.addEventListener('load', () => {
-    // 延迟执行以确保页面完全加载
-    setTimeout(animateCounters, 500);
-});
-
-// ===== 代码块点击复制 =====
-const codeBlocks = document.querySelectorAll('code');
-
-codeBlocks.forEach(block => {
-    block.style.cursor = 'pointer';
-    block.style.position = 'relative';
-    
-    block.addEventListener('click', function() {
-        const text = this.textContent;
-        
-        // 复制到剪贴板
-        navigator.clipboard.writeText(text).then(() => {
-            // 显示复制提示
-            const originalText = this.textContent;
-            this.textContent = '✓ 已复制';
-            this.style.color = 'var(--success-color)';
-            
-            setTimeout(() => {
-                this.textContent = originalText;
-                this.style.color = '';
-            }, 2000);
-        }).catch(err => {
-            console.error('复制失败:', err);
-        });
+    card.addEventListener('mouseleave', function() {
+      pricingCards.forEach(c => {
+        c.style.opacity = '1';
+      });
     });
-});
+  });
 
-// ===== 响应式菜单（未来功能） =====
-function setupResponsiveMenu() {
-    const navbar = document.querySelector('.navbar');
-    
-    // 检查是否是移动设备
-    if (window.innerWidth <= 768) {
-        // 可以在这里添加移动菜单逻辑
-        console.log('移动设备菜单已启用');
+  // 模拟预览卡片交互
+  const previewItems = document.querySelectorAll('.preview-item');
+
+  previewItems.forEach(item => {
+    item.addEventListener('click', function() {
+      const text = this.textContent;
+      this.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        this.style.transform = '';
+      }, 150);
+
+      // 可以在这里添加更多交互效果
+      console.log(`点击了: ${text}`);
+    });
+  });
+
+  // 页面加载完成提示
+  console.log('🚀 NowView 网站加载完成！');
+  console.log('📊 感谢您的访问！');
+
+  // 检测浏览器并显示提示
+  const checkBrowser = () => {
+    const userAgent = navigator.userAgent;
+    let browser = 'unknown';
+
+    if (userAgent.includes('Chrome') && !userAgent.includes('Edg')) {
+      browser = 'Chrome';
+    } else if (userAgent.includes('Firefox')) {
+      browser = 'Firefox';
+    } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+      browser = 'Safari';
+    } else if (userAgent.includes('Edg')) {
+      browser = 'Edge';
     }
-}
 
-// 页面加载时设置
-window.addEventListener('DOMContentLoaded', setupResponsiveMenu);
-window.addEventListener('resize', setupResponsiveMenu);
+    console.log(`🌐 检测到浏览器: ${browser}`);
 
-// ===== 主题检测和应用 =====
-function initTheme() {
-    // 检查系统主题偏好
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const storedTheme = localStorage.getItem('theme');
-    
-    let theme = storedTheme || (prefersDark ? 'dark' : 'light');
-    
-    document.documentElement.setAttribute('data-theme', theme);
-}
-
-// 页面加载时初始化主题
-window.addEventListener('DOMContentLoaded', initTheme);
-
-// 监听系统主题变化
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    const newTheme = e.matches ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-});
-
-// ===== 性能优化：懒加载 =====
-function setupLazyLoading() {
-    // 如果浏览器支持 IntersectionObserver
-    if ('IntersectionObserver' in window) {
-        const imageElements = document.querySelectorAll('img[data-src]');
-        
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.removeAttribute('data-src');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-        
-        imageElements.forEach(img => imageObserver.observe(img));
+    if (browser !== 'Chrome' && browser !== 'Edge') {
+      const downloadBtn = document.querySelector('.download-method.chrome .btn');
+      if (downloadBtn) {
+        const warning = document.createElement('p');
+        warning.style.color = '#f59e0b';
+        warning.style.fontSize = '14px';
+        warning.style.marginTop = '12px';
+        warning.textContent = '⚠️ NowView 目前仅支持 Chrome/Edge 浏览器';
+        downloadBtn.parentElement.insertBefore(warning, downloadBtn.nextSibling);
+      }
     }
-}
+  };
 
-window.addEventListener('DOMContentLoaded', setupLazyLoading);
+  checkBrowser();
 
-// ===== 页面加载完成指示 =====
-window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
-    console.log('✅ NowView 官网已加载完成');
-});
+  // 添加复制功能到兑换码
+  const demoCode = document.querySelector('.demo-code code');
+  if (demoCode) {
+    demoCode.style.cursor = 'pointer';
+    demoCode.title = '点击复制';
 
-// ===== 初始样式 =====
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.opacity = '0.95';
-    
-    // 添加加载动画
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        section {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-        
-        section:nth-child(n) {
-            animation-delay: calc(0.1s * var(--section-index, 0));
-        }
+    demoCode.addEventListener('click', function() {
+      const code = this.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const original = this.textContent;
+        this.textContent = '✅ 已复制！';
+
+        setTimeout(() => {
+          this.textContent = original;
+        }, 1500);
+      }).catch(err => {
+        console.error('复制失败:', err);
+      });
+    });
+  }
+
+  // 滚动到顶部按钮
+  const createScrollToTop = () => {
+    const scrollBtn = document.createElement('button');
+    scrollBtn.innerHTML = '↑';
+    scrollBtn.className = 'scroll-to-top';
+    scrollBtn.style.cssText = `
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     `;
-    document.head.appendChild(style);
-});
 
-// ===== 分析追踪（可选） =====
-function trackEvent(eventName, eventData = {}) {
-    // 这里可以集成 Google Analytics 或其他分析工具
-    console.log(`📊 事件: ${eventName}`, eventData);
-}
-
-// 追踪按钮点击
-document.querySelectorAll('.btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const buttonText = this.textContent.trim();
-        trackEvent('button_click', { button: buttonText });
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-});
 
-// ===== 获取用户反馈 =====
-function setupFeedback() {
-    // 创建反馈按钮（可选）
-    const feedbackButton = document.createElement('div');
-    feedbackButton.id = 'feedback-button';
-    feedbackButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: var(--primary-color);
-        color: white;
-        padding: 12px 16px;
-        border-radius: 50px;
-        cursor: pointer;
-        z-index: 999;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
-        display: none;
-    `;
-    feedbackButton.innerHTML = '💬 反馈';
-    
-    feedbackButton.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.1)';
-        this.style.boxShadow = '0 6px 16px rgba(0, 168, 255, 0.6)';
+    document.body.appendChild(scrollBtn);
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 500) {
+        scrollBtn.style.opacity = '1';
+        scrollBtn.style.visibility = 'visible';
+      } else {
+        scrollBtn.style.opacity = '0';
+        scrollBtn.style.visibility = 'hidden';
+      }
     });
-    
-    feedbackButton.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
-        this.style.boxShadow = '0 4px 12px rgba(0, 168, 255, 0.4)';
+
+    scrollBtn.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-4px) scale(1.1)';
     });
-    
-    feedbackButton.addEventListener('click', function() {
-        // 这里可以集成反馈表单或链接
-        window.open('https://github.com/yourrepo/issues', '_blank');
-        trackEvent('feedback_click');
+
+    scrollBtn.addEventListener('mouseleave', function() {
+      this.style.transform = '';
     });
-    
-    // 注释掉反馈按钮，如果需要可以打开
-    // document.body.appendChild(feedbackButton);
-}
+  };
 
-window.addEventListener('DOMContentLoaded', setupFeedback);
+  createScrollToTop();
 
-// ===== 平滑加载图片 =====
-function loadImage(img) {
-    img.style.opacity = '0';
-    img.style.transition = 'opacity 0.3s ease';
-    
-    img.onload = function() {
-        this.style.opacity = '1';
-    };
-}
-
-// ===== 防止链接的默认行为（如果需要） =====
-document.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    
-    if (link && link.href.startsWith('#')) {
-        e.preventDefault();
-        const target = document.querySelector(link.href);
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+  // 添加当前年份到页脚
+  const yearSpan = document.querySelector('.footer-bottom p');
+  if (yearSpan && yearSpan.textContent.includes('2024')) {
+    const currentYear = new Date().getFullYear();
+    if (currentYear > 2024) {
+      yearSpan.textContent = yearSpan.textContent.replace('2024', currentYear);
     }
+  }
 });
-
-// ===== 性能监控 =====
-if (window.performance && window.performance.timing) {
-    window.addEventListener('load', () => {
-        const perfData = window.performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log(`⚡ 页面加载时间: ${pageLoadTime}ms`);
-    });
-}
-
-// ===== 设置页面元数据 =====
-function updateMetaTags() {
-    // 你可以在这里动态更新 meta 标签
-    const description = document.querySelector('meta[name="description"]');
-    if (description) {
-        console.log('✅ Meta 描述:', description.content);
-    }
-}
-
-window.addEventListener('DOMContentLoaded', updateMetaTags);
-
-console.log('%c🚀 NowView - 智能链接预览工具', 'color: #00a8ff; font-size: 16px; font-weight: bold;');
-console.log('%c完整的链接预览、阅读模式、视频优化、翻译搜索功能', 'color: #666; font-size: 12px;');
-console.log('%chttps://github.com/yourname/notab-extension', 'color: #00a8ff; font-size: 12px; text-decoration: underline;');
