@@ -1,0 +1,14 @@
+# Jekyll Configuration for GitHub Pages
+title: NowView
+description: A modern website showcasing your projects
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Build settings
+markdown: kramdown
+exclude:
+  - .gitignore
+  - .git/
+  - .github/

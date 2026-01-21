@@ -1,0 +1,106 @@
+{
+  "manifest_version": 3,
+  "name": "NowView",
+  "version": "1.0.0",
+  "description": "智能链接预览工具 - 预览链接、阅读模式、视频模式、多主题支持",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "declarativeNetRequest",
+    "browsingData"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "remove_frame_options",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "utils/constants.js",
+        "utils/event-bus.js",
+        "utils/dom-utils.js",
+        "utils/storage.js",
+        "utils/theme-manager.js",
+        "utils/membership.js",
+        "content/ui-manager.js",
+        "content/preview-manager.js",
+        "content/link-preview.js",
+        "content/reader-mode.js",
+        "content/video-mode.js",
+        "content/translator.js",
+        "content/search.js",
+        "content/content-script.js"
+      ],
+      "css": ["content/content-styles.css"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "options_page": "options/options.html",
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "themes/*.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "commands": {
+    "close-all-previews": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+W",
+        "mac": "Command+Shift+W"
+      },
+      "description": "关闭所有预览窗口"
+    },
+    "cascade-layout": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "Command+Shift+C"
+      },
+      "description": "层叠布局"
+    },
+    "tile-layout": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+T",
+        "mac": "Command+Shift+T"
+      },
+      "description": "平铺布局"
+    }
+  }
+}
