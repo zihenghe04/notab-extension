@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NowView</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <div class="header-content">
+        <h1>NowView</h1>
+        <p class="subtitle">智能预览工具</p>
+      </div>
+      <div class="membership-badge" id="membershipBadge">
+        <span class="badge-icon">✨</span>
+        <span class="badge-text">Free</span>
+      </div>
+    </header>
+
+    <div class="popup-content">
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">活动预览</span>
+          <span class="stat-value" id="activeCount">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">固定预览</span>
+          <span class="stat-value" id="pinnedCount">0</span>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <button id="cascadeBtn" class="action-btn" title="级联布局">
+          <span>📐</span>
+          <span>级联布局</span>
+        </button>
+        <button id="tileBtn" class="action-btn" title="平铺布局">
+          <span>⊞</span>
+          <span>平铺布局</span>
+        </button>
+        <button id="closeAllBtn" class="action-btn danger" title="关闭所有">
+          <span>✕</span>
+          <span>关闭所有</span>
+        </button>
+      </div>
+
+      <div class="settings-section">
+        <h3>快速设置</h3>
+
+        <div class="setting-item">
+          <label class="switch">
+            <input type="checkbox" id="enableDrag">
+            <span class="slider"></span>
+          </label>
+          <span class="setting-label">拖拽预览</span>
+        </div>
+
+        <div class="setting-item">
+          <label class="switch">
+            <input type="checkbox" id="enableCtrlClick">
+            <span class="slider"></span>
+          </label>
+          <span class="setting-label">Ctrl+点击预览</span>
+        </div>
+
+        <div class="setting-item">
+          <label class="switch">
+            <input type="checkbox" id="enableHover">
+            <span class="slider"></span>
+          </label>
+          <span class="setting-label">悬停预览</span>
+        </div>
+      </div>
+
+      <div class="theme-section">
+        <h3>主题 <span class="theme-section-hint">（紫霞主题需要 Pro）</span></h3>
+        <div class="theme-grid" id="themeGrid">
+          <!-- 主题按钮将由 JS 动态生成 -->
+        </div>
+      </div>
+
+      <!-- Pro 升级卡片（仅 Free 用户显示） -->
+      <div class="pro-upgrade-card" id="proUpgradeCard" style="display: none;">
+        <div class="upgrade-header">
+          <h4>🚀 升级到 Pro</h4>
+          <p>解锁更多精彩主题</p>
+        </div>
+        <button id="activateProBtn" class="btn-upgrade">
+          🎫 输入兑换码
+        </button>
+      </div>
+    </div>
+
+    <footer class="popup-footer">
+      <button id="optionsBtn" class="link-btn">⚙️ 高级设置</button>
+      <a href="#" id="helpBtn" class="link-btn">❓ 帮助</a>
+    </footer>
+  </div>
+
+  <!-- 兑换码激活模态框 -->
+  <div id="activationModal" class="modal" style="display: none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🎫 激活 Pro 会员</h3>
+        <button class="modal-close" id="closeModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">输入兑换码以解锁所有 Pro 功能</p>
+        <input type="text" id="codeInput" class="code-input" placeholder="请输入兑换码" maxlength="20">
+        <div id="codeMessage" class="code-message"></div>
+        <div class="pro-features">
+          <div class="feature-item">💜 紫霞主题</div>
+          <div class="feature-item">🎨 更多主题持续更新</div>
+          <div class="feature-item">⚡ 优先体验新功能</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelBtn" class="btn-secondary">取消</button>
+        <button id="activateBtn" class="btn-primary">激活</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../utils/event-bus.js"></script>
+  <script src="../utils/theme-manager.js"></script>
+  <script src="../utils/membership.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

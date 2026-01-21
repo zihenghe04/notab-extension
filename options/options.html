@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NowView 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>⚙️ NowView 设置</h1>
+      <p class="subtitle">自定义您的智能预览体验</p>
+    </header>
+
+    <nav class="tabs">
+      <button class="tab active" data-tab="general">常规</button>
+      <button class="tab" data-tab="preview">预览</button>
+      <button class="tab" data-tab="reader">阅读模式</button>
+      <button class="tab" data-tab="translator">翻译</button>
+      <button class="tab" data-tab="about">关于</button>
+    </nav>
+
+    <main class="content">
+      <!-- 常规设置 -->
+      <div class="tab-content active" data-content="general">
+        <section class="section">
+          <h2>主题</h2>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="theme" value="light">
+              <span>☀️ 亮色主题</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="theme" value="dark">
+              <span>🌙 暗色主题</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="theme" value="auto">
+              <span>🔄 跟随系统</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>快捷键</h2>
+          <div class="shortcut-list">
+            <div class="shortcut-item">
+              <span>Ctrl + 点击链接</span>
+              <span class="shortcut-desc">在预览窗口中打开</span>
+            </div>
+            <div class="shortcut-item">
+              <span>拖拽链接</span>
+              <span class="shortcut-desc">在预览窗口中打开</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Esc</span>
+              <span class="shortcut-desc">关闭所有未固定的预览</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Ctrl + Shift + C</span>
+              <span class="shortcut-desc">级联布局</span>
+            </div>
+            <div class="shortcut-item">
+              <span>Ctrl + Shift + T</span>
+              <span class="shortcut-desc">平铺布局</span>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 预览设置 -->
+      <div class="tab-content" data-content="preview">
+        <section class="section">
+          <h2>触发方式</h2>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="showOnDrag">
+              <span>拖拽链接时预览</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showOnCtrlClick">
+              <span>Ctrl + 点击时预览</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showOnHover">
+              <span>悬停时预览</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="section" id="hoverSection" style="display: none;">
+          <h2>悬停延迟</h2>
+          <div class="slider-container">
+            <input type="range" id="hoverDelay" min="100" max="2000" step="100" value="500">
+            <span class="slider-value" id="hoverDelayValue">500</span> 毫秒
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>默认窗口大小</h2>
+          <div class="input-group">
+            <div class="input-item">
+              <label>宽度 (px)</label>
+              <input type="number" id="defaultWidth" min="300" max="1920" value="800">
+            </div>
+            <div class="input-item">
+              <label>高度 (px)</label>
+              <input type="number" id="defaultHeight" min="200" max="1080" value="600">
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>多窗口预览</h2>
+          <label class="checkbox-label">
+            <input type="checkbox" id="enableMultiPreview">
+            <span>允许同时打开多个预览窗口</span>
+          </label>
+        </section>
+      </div>
+
+      <!-- 阅读模式设置 -->
+      <div class="tab-content" data-content="reader">
+        <section class="section">
+          <h2>字体设置</h2>
+          <div class="input-group">
+            <div class="input-item">
+              <label>字体大小</label>
+              <input type="number" id="fontSize" min="12" max="24" value="18">
+            </div>
+            <div class="input-item">
+              <label>行高</label>
+              <input type="number" id="lineHeight" min="1" max="2.5" step="0.1" value="1.6">
+            </div>
+            <div class="input-item">
+              <label>最大宽度 (px)</label>
+              <input type="number" id="maxWidth" min="500" max="1000" value="700">
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>字体族</h2>
+          <select id="fontFamily">
+            <option value="Georgia, serif">Georgia (衬线)</option>
+            <option value="Arial, sans-serif">Arial (无衬线)</option>
+            <option value="'Times New Roman', serif">Times New Roman</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+            <option value="system-ui, sans-serif">系统默认</option>
+          </select>
+        </section>
+      </div>
+
+      <!-- 翻译设置 -->
+      <div class="tab-content" data-content="translator">
+        <section class="section">
+          <h2>翻译引擎</h2>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="translatorApi" value="LibreTranslate">
+              <span>LibreTranslate (免费)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="translatorApi" value="MyMemory">
+              <span>MyMemory (免费)</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>快速翻译按钮</h2>
+          <label class="checkbox-label">
+            <input type="checkbox" id="showQuickButton">
+            <span>选中文本后显示翻译按钮</span>
+          </label>
+        </section>
+
+        <section class="section">
+          <h2>默认目标语言</h2>
+          <select id="defaultTargetLang">
+            <option value="auto">自动检测</option>
+            <option value="zh">中文</option>
+            <option value="en">英文</option>
+            <option value="ja">日文</option>
+            <option value="ko">韩文</option>
+            <option value="fr">法文</option>
+            <option value="de">德文</option>
+            <option value="es">西班牙文</option>
+          </select>
+        </section>
+      </div>
+
+      <!-- 关于 -->
+      <div class="tab-content" data-content="about">
+        <section class="section about-section">
+          <h2>关于 NoTab</h2>
+          <p>版本：1.0.0</p>
+          <p>NoTab 是一个功能强大的链接预览工具，让您无需打开新标签页即可快速浏览网页内容。</p>
+
+          <h3>核心功能</h3>
+          <ul>
+            <li>🔗 链接预览 - 在当前页面直接预览链接</li>
+            <li>📖 阅读模式 - 沉浸式阅读体验</li>
+            <li>🎬 视频模式 - 专注观看视频内容</li>
+            <li>🌐 快速翻译 - 一键翻译选中文本</li>
+            <li>🔍 快速搜索 - 多搜索引擎支持</li>
+            <li>🎨 多主题 - 亮色/暗色主题</li>
+            <li>☁️ 云同步 - Google账号自动同步设置</li>
+          </ul>
+
+          <h3>技术栈</h3>
+          <p>基于 Manifest V3 和 Vanilla JavaScript 开发</p>
+
+          <div class="button-group">
+            <button id="resetBtn" class="button button-danger">重置所有设置</button>
+            <button id="exportBtn" class="button">导出设置</button>
+            <button id="importBtn" class="button">导入设置</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <button id="saveBtn" class="button button-primary">保存设置</button>
+      <div class="save-status" id="saveStatus"></div>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

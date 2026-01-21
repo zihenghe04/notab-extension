@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NowView</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header with branding and membership status -->
+    <header class="popup-header">
+      <div class="header-left">
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" opacity="0.8"/>
+            <rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor" opacity="0.6"/>
+            <rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor" opacity="0.6"/>
+            <rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="header-text">
+          <h1>NowView</h1>
+          <p class="subtitle">智能预览</p>
+        </div>
+      </div>
+      <div class="membership-badge" id="membershipBadge">
+        <span class="badge-text">Free</span>
+      </div>
+    </header>
+
+    <div class="popup-content">
+      <!-- Stats Section -->
+      <div class="stats-section">
+        <div class="stat-card">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <span class="stat-value" id="activeCount">0</span>
+            <span class="stat-label">活动预览</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📌</div>
+          <div class="stat-info">
+            <span class="stat-value" id="pinnedCount">0</span>
+            <span class="stat-label">已固定</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="actions-section">
+        <h3 class="section-title">快速操作</h3>
+        <div class="action-buttons">
+          <button id="cascadeBtn" class="action-btn">
+            <span class="btn-icon">📐</span>
+            <span class="btn-text">级联</span>
+          </button>
+          <button id="tileBtn" class="action-btn">
+            <span class="btn-icon">⊞</span>
+            <span class="btn-text">平铺</span>
+          </button>
+          <button id="closeAllBtn" class="action-btn action-btn-danger">
+            <span class="btn-icon">✕</span>
+            <span class="btn-text">全部关闭</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Theme Selection -->
+      <div class="theme-section">
+        <h3 class="section-title">主题</h3>
+        <div class="theme-grid">
+          <button class="theme-card" data-theme="light">
+            <div class="theme-preview theme-preview-light"></div>
+            <span class="theme-name">☀️ 明亮</span>
+          </button>
+          <button class="theme-card" data-theme="dark">
+            <div class="theme-preview theme-preview-dark"></div>
+            <span class="theme-name">🌙 暗夜</span>
+          </button>
+          <button class="theme-card" data-theme="ocean">
+            <div class="theme-preview theme-preview-ocean"></div>
+            <span class="theme-name">🌊 海洋</span>
+          </button>
+          <button class="theme-card" data-theme="sunset">
+            <div class="theme-preview theme-preview-sunset"></div>
+            <span class="theme-name">🌅 日落</span>
+          </button>
+          <button class="theme-card" data-theme="forest">
+            <div class="theme-preview theme-preview-forest"></div>
+            <span class="theme-name">🌲 森林</span>
+          </button>
+          <button class="theme-card pro-only" data-theme="purple">
+            <div class="theme-preview theme-preview-purple"></div>
+            <span class="theme-name">💜 紫霞</span>
+            <span class="pro-badge">PRO</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Settings -->
+      <div class="settings-section">
+        <h3 class="section-title">快速设置</h3>
+        <div class="setting-items">
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-label">拖拽预览</span>
+              <span class="setting-desc">拖拽链接显示预览</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="enableDrag" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <div class="setting-info">
+              <span class="setting-label">Ctrl+点击</span>
+              <span class="setting-desc">按住Ctrl点击预览</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="enableCtrlClick" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="setting-item pro-only-feature">
+            <div class="setting-info">
+              <span class="setting-label">悬停预览 <span class="pro-badge-mini">PRO</span></span>
+              <span class="setting-desc">鼠标悬停自动预览</span>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="enableHover">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Membership Section (for Free users) -->
+      <div class="membership-section" id="membershipSection">
+        <div class="membership-card">
+          <div class="membership-header">
+            <h3>🚀 升级到 Pro</h3>
+            <p>解锁所有高级功能</p>
+          </div>
+          <div class="pro-features">
+            <div class="feature-item">✨ 解锁所有主题</div>
+            <div class="feature-item">⚡ 悬停预览</div>
+            <div class="feature-item">🎨 自定义样式</div>
+            <div class="feature-item">🔄 更多功能持续更新</div>
+          </div>
+          <button id="activateProBtn" class="btn-primary">
+            🎫 输入兑换码
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <button id="optionsBtn" class="footer-btn">
+        <span>⚙️</span>
+        <span>设置</span>
+      </button>
+      <button id="helpBtn" class="footer-btn">
+        <span>❓</span>
+        <span>帮助</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- Activation Modal -->
+  <div id="activationModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🎫 激活 Pro 会员</h2>
+        <button class="modal-close" id="closeModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">输入您的兑换码以解锁所有 Pro 功能</p>
+        <input type="text" id="activationCodeInput" class="code-input" placeholder="请输入兑换码" maxlength="20">
+        <div id="activationMessage" class="activation-message"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelActivation" class="btn-secondary">取消</button>
+        <button id="confirmActivation" class="btn-primary">激活</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
