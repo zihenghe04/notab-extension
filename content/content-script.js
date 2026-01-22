@@ -130,23 +130,22 @@
    */
   async function applyTheme() {
     try {
-      const theme = await window.notabStorage.getSetting('theme');
-      applyThemeChange(theme);
-
-      // 监听主题变化
-      window.notabEventBus.on(window.NOTAB_CONSTANTS.EVENTS.THEME_CHANGED, (newTheme) => {
-        applyThemeChange(newTheme);
-      });
-
-      // 监听系统主题变化（仅在 auto 模式下）
-      if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', async () => {
-          const currentTheme = await window.notabStorage.getSetting('theme');
-          if (currentTheme === 'auto') {
-            applyThemeChange('auto');
-          }
-        });
+      // 使用新的主题管理器
+      if (window.themeManager) {
+        const currentTheme = await window.themeManager.getSavedTheme();
+        console.log('Current theme from manager:', currentTheme);
       }
+
+      // 监听主题变化消息
+      chrome.runtime.onMessage.addListener((message) => {
+        if (message.action === 'themeChanged') {
+          console.log('Theme changed message received:', message.theme);
+          // 触发所有预览窗口更新主题
+          if (window.notabLinkPreview) {
+            window.notabLinkPreview.applyThemeToAllPreviews(message.theme);
+          }
+        }
+      });
 
     } catch (error) {
       console.error('Failed to apply theme:', error);
@@ -154,12 +153,18 @@
   }
 
   /**
-   * 应用主题变化
+   * 应用主题变化（已废弃，使用新的主题管理器）
    */
   function applyThemeChange(theme) {
-    console.log('Applying theme:', theme);
+    console.log('Applying theme change (legacy):', theme);
 
-    // 移除所有主题类
+    // 如果有新的主题管理器，使用它
+    if (window.themeManager && window.themeManager.themes[theme]) {
+      // 新主题系统已经由 theme-manager 处理
+      return;
+    }
+
+    // 旧主题系统的兼容代码
     document.documentElement.classList.remove('notab-dark-theme');
     document.documentElement.classList.remove('notab-light-theme');
 
